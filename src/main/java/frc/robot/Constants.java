@@ -32,4 +32,5 @@ public final class Constants {
                                FL_DRIVE_MULTIPLIER = 1,
                                BL_DRIVE_MULTIPLIER = 1,
                                BR_DRIVE_MULTIPLIER = -1;
+    public static final int TEAM_NUMBER = 4173;
 }

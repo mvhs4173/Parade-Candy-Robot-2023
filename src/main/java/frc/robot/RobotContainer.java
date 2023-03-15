@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.LEDFlash;
 import frc.robot.commands.LaunchCandy;
 import frc.robot.commands.RunLEDPatrioticPattern;
+import frc.robot.subsystems.ApriltagInfo;
 import frc.robot.subsystems.CandyCannon;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveDrive;
@@ -35,7 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
+  private ApriltagInfo m_apriltagInfo;
   // JOYSTICKS/CONTROLLERS
   public static XboxController driverJoy = new XboxController(RobotMap.driverJoy);
 
@@ -80,6 +81,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
     configureButtonBindings();
   }
