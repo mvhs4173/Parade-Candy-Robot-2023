@@ -9,6 +9,7 @@ import ntcore
 import time
 
 def main():
+    show_gray = True
     CameraServer.enableLogging()
 
     # The Microsoft LifeCam HD-3000 has no unique id number
@@ -47,9 +48,12 @@ def main():
             # Send the output the error.
             outputStream.notifyError(cvSink.getError())
         else:
-            img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)        
-            outputStream.putFrame(img_gray)
-            # print("delta time = " + str((grab_time - prev_grab_time)/1e6) + "")
+            if show_gray:
+                img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)        
+                outputStream.putFrame(img_gray)
+            else:
+                outputStream.putFrame(img_bgr)
+            print("delta time = " + str((grab_time - prev_grab_time)/1e6) + "")
         time.sleep(0.02)
 if __name__ == "__main__":
 
