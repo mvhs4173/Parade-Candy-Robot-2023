@@ -23,9 +23,9 @@ public class SwerveDrive {
                                MIN_DRIVE_ROTATION_EXPONENT = .5; // The power to reaise the chassis rotation speed to with lookVector driving while stationary
                                public static final double INPUT_DEADZONE = .05; // (percent) Region at which any drive/rotation input is considered noise, and set to 0
     public static final double SWIVEL_SPEED = 1, // (percent) Max speed for swiveling module to target angle
-                               ALLOWED_ERROR = 3.5, // (degrees)
+                               ALLOWED_ERROR = 0.6, // (degrees)
                                ANGLE_FOR_MAX_SWIVEL_SPEED = 90, // The angle (difference between current heading and desired setpoint) at which the module should swivel at max speed (SWIVEL_SPEED)
-                               SWIVEL_SPEED_EXPONENT = .5; // The power to raise the module swivel speed to, helping the module reach its setpoint smoothly
+                               SWIVEL_SPEED_EXPONENT = 1.0; // The power to raise the module swivel speed to, helping the module reach its setpoint smoothly
 
     private SwerveDriveKinematics kinematics;
 
@@ -225,9 +225,13 @@ public class SwerveDrive {
 	    return deg;
     }
 
-    private double getEncoderAngleOfSwivelMotor(TalonSRXMotorController motor) {
+    public double getEncoderAngleOfSwivelMotor(TalonSRXMotorController motor) {
         double degrees = (motor.getEncoderPosition() / (double) SwerveModule.ENCODER_TICKS_PER_REVOLUTION) * 360;
         return optimizeDegrees(degrees);
+    }
+
+    public SwerveModule[] getSwerveModules() {
+        return modules;
     }
 
     @SuppressWarnings("unused")

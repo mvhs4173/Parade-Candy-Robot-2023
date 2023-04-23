@@ -9,18 +9,18 @@ import java.awt.Color;
 import com.kauailabs.navx.frc.AHRS;
 
 // import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticHub;
+// import edu.wpi.first.wpilibj.Compressor;
+// import edu.wpi.first.wpilibj.DoubleSolenoid;
+// import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.SPI;
 // import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
+// import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.LEDFlash;
-import frc.robot.commands.LaunchCandy;
+// import frc.robot.commands.LaunchCandy;
 import frc.robot.commands.RunLEDPatrioticPattern;
 import frc.robot.subsystems.ApriltagInfo;
-import frc.robot.subsystems.CandyCannon;
+// import frc.robot.subsystems.CandyCannon;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
@@ -44,8 +44,8 @@ public class RobotContainer {
   public static JoystickButton launchButton = new JoystickButton(driverJoy, RobotMap.launchButton);
 
   // MISCELLANEOUS
-  public static PneumaticHub pHub = new PneumaticHub(RobotMap.pcm);
-  public static Compressor phCompressor = new Compressor(RobotMap.pcm, PneumaticsModuleType.REVPH);
+  // public static PneumaticHub pHub = new PneumaticHub(RobotMap.pcm);
+  // public static Compressor phCompressor = new Compressor(RobotMap.pcm, PneumaticsModuleType.REVPH);
   public static LEDStrip ledStrip = new LEDStrip(RobotMap.ledStrip, 300);
 
   // MOTOR CONTROLLERS
@@ -59,28 +59,29 @@ public class RobotContainer {
                                         swivelMotorBackRight = new TalonSRXMotorController(RobotMap.swivelMotorBackRight);
 
   // SOLENOIDS
-  public static DoubleSolenoid cannonDoubleSolenoid = new DoubleSolenoid(RobotMap.pcm, PneumaticsModuleType.REVPH, RobotMap.cannonForwardChannel, RobotMap.cannonReverseChannel);
+  // public static DoubleSolenoid cannonDoubleSolenoid = new DoubleSolenoid(RobotMap.pcm, PneumaticsModuleType.REVPH, RobotMap.cannonForwardChannel, RobotMap.cannonReverseChannel);
 
   // SENSORS //
   public static AHRS navX = new AHRS(SPI.Port.kMXP); // Gets NavX device installed into SPI port (integrated onto RoboRio). Other options would be to use USB or I2C
 
   // SUBSYSTEMS
-  public static SwerveModule swerveModuleFR = new SwerveModule(driveMotorFrontRight, swivelMotorFrontRight, Constants.FR_SWIVEL_ZERO_ANGLE, Constants.FR_DRIVE_MULTIPLIER, Constants.FR_LOCATION),
-                             swerveModuleFL = new SwerveModule(driveMotorFrontLeft, swivelMotorFrontLeft, Constants.FL_SWIVEL_ZERO_ANGLE, Constants.FL_DRIVE_MULTIPLIER, Constants.FL_LOCATION),
-                             swerveModuleBL = new SwerveModule(driveMotorBackLeft, swivelMotorBackLeft, Constants.BL_SWIVEL_ZERO_ANGLE, Constants.BL_DRIVE_MULTIPLIER, Constants.BL_LOCATION),
-                             swerveModuleBR = new SwerveModule(driveMotorBackRight, swivelMotorBackRight, Constants.BR_SWIVEL_ZERO_ANGLE, Constants.BR_DRIVE_MULTIPLIER, Constants.BR_LOCATION);
+  public static SwerveModule swerveModuleFR = new SwerveModule("Front Right", driveMotorFrontRight, swivelMotorFrontRight, Constants.FR_SWIVEL_ZERO_ANGLE, Constants.FR_DRIVE_MULTIPLIER, Constants.FR_LOCATION),
+                             swerveModuleFL = new SwerveModule("Front Left", driveMotorFrontLeft, swivelMotorFrontLeft, Constants.FL_SWIVEL_ZERO_ANGLE, Constants.FL_DRIVE_MULTIPLIER, Constants.FL_LOCATION),
+                             swerveModuleBL = new SwerveModule("Back Left", driveMotorBackLeft, swivelMotorBackLeft, Constants.BL_SWIVEL_ZERO_ANGLE, Constants.BL_DRIVE_MULTIPLIER, Constants.BL_LOCATION),
+                             swerveModuleBR = new SwerveModule("Back Right", driveMotorBackRight, swivelMotorBackRight, Constants.BR_SWIVEL_ZERO_ANGLE, Constants.BR_DRIVE_MULTIPLIER, Constants.BR_LOCATION);
   public static SwerveDrive swerveDrive = new SwerveDrive(navX, swerveModuleFR, swerveModuleFL, swerveModuleBL, swerveModuleBR);
 
-  public static CandyCannon cannon = new CandyCannon(cannonDoubleSolenoid);
+  // public static CandyCannon cannon = new CandyCannon(cannonDoubleSolenoid);
 
   // COMMANDS
   public static RunLEDPatrioticPattern cmdRunLEDPatrioticPattern = new RunLEDPatrioticPattern(ledStrip);
   //public static FlashLEDLaunchPattern cmdFlashLEDLaunchPattern = new FlashLEDLaunchPattern(ledStrip);
   public static LEDFlash ledFlash = new LEDFlash(ledStrip, new Color(255,0,0), new Color(0,255,0), 1.0);
-  public static LaunchCandy cmdLaunchCandy = new LaunchCandy(cannon, ledFlash, cmdRunLEDPatrioticPattern);
+  // public static LaunchCandy cmdLaunchCandy = new LaunchCandy(cannon, ledFlash, cmdRunLEDPatrioticPattern);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    System.out.println("@@@ naxX.getYaw=" + navX.getYaw() + " @@@");
     m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
     configureButtonBindings();
@@ -93,7 +94,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    launchButton.onTrue(cmdLaunchCandy);
+    System.out.println("configureButtonBinds [no buttons configured]");
+    // launchButton.onTrue(cmdLaunchCandy);
   }
 
   /**

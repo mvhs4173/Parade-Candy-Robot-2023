@@ -11,15 +11,16 @@ import edu.wpi.first.math.geometry.Translation2d;
 /** Add your docs here. */
 public class SwerveModule {
     public static final int ENCODER_TICKS_PER_REVOLUTION = 1024;
-
+    private final String name;
     private TalonSRXMotorController driveMotor, swivelMotor;
     private boolean reverse;
     private double zeroAngle;
     private double driveMultiplier;
     private Translation2d location;
 
-    public SwerveModule(TalonSRXMotorController driveMotor, TalonSRXMotorController swivelMotor,
+    public SwerveModule(String name, TalonSRXMotorController driveMotor, TalonSRXMotorController swivelMotor,
                         double zeroAngle, double driveMultiplier, Translation2d location) {
+        this.name = name;
         this.driveMotor = driveMotor;
         this.swivelMotor = swivelMotor;
         this.zeroAngle = zeroAngle;
@@ -52,7 +53,9 @@ public class SwerveModule {
     }
 
     public void resetModule() {
+        System.out.print(name + ": reset zeroAngle from " + zeroAngle + " to ");
         zeroAngle -= getEncoderAngleOfSwivelMotor();
+        System.out.println(zeroAngle);
         reverse = false;
     }
 
@@ -71,6 +74,13 @@ public class SwerveModule {
 
     public Translation2d getModuleLocation() {
         return location;
+    }
+
+    public TalonSRXMotorController getSwivelMotor(){
+        return swivelMotor;
+    }
+    public TalonSRXMotorController getDriveMotor() {
+        return driveMotor;
     }
 
     //////////////////////
