@@ -23,8 +23,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  // private XboxController joy = RobotContainer.driverJoy;
-
   private SwerveDrive swerveDrive = RobotContainer.swerveDrive;
   public static final String maxMotorSpeedPercentKey = "MaxMotorSpeedPercent";
   public static final String swivelSpeedExponentKey = "SwivelSpeedExponent";
