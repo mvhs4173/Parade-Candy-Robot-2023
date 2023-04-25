@@ -12,9 +12,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Vector2d;
 
-public class SwerveDrive {
+public class SwerveDrive extends SubsystemBase{
 
     public static final double WHEEL_DIAMETER = 4 / 12.0; // (feet)
     public static final double MAX_DRIVE_PERCENT_SPEED = .37, // (percent) Max speed for driving when using percent speed

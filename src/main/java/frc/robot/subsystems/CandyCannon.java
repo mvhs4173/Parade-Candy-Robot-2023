@@ -6,9 +6,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
-public class CandyCannon {
+public class CandyCannon extends SubsystemBase {
     private final Value EXTENDED_VALUE = Value.kForward;
 
     private DoubleSolenoid doubleSolenoid;
