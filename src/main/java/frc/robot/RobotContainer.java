@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.SPI;
 // import edu.wpi.first.wpilibj.PneumaticsControlModule;
 // import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveViaXboxController;
 import frc.robot.commands.LEDFlash;
 // import frc.robot.commands.LaunchCandy;
 import frc.robot.commands.RunLEDPatrioticPattern;
@@ -85,6 +86,7 @@ public class RobotContainer {
     m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
     configureButtonBindings();
+    swerveDrive.setDefaultCommand(new DriveViaXboxController(swerveDrive, driverJoy));
   }
 
   /**

@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -24,7 +23,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private XboxController joy = RobotContainer.driverJoy;
+  // private XboxController joy = RobotContainer.driverJoy;
 
   private SwerveDrive swerveDrive = RobotContainer.swerveDrive;
   public static final String maxMotorSpeedPercentKey = "MaxMotorSpeedPercent";
@@ -112,14 +111,8 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-  // TODO: put this code into a default command for swerveDrive
-  @Override
-  public void teleopPeriodic() {
-    if (joy.getPOV() == 0) {
-      swerveDrive.resetFieldOrientation();
-    }
-    swerveDrive.driveFieldOriented(new Vector2d(-joy.getLeftX(), -joy.getLeftY()), -joy.getRightX());
-  }
+    @Override
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
