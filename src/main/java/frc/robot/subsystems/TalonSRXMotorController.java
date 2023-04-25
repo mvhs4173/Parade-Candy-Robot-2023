@@ -4,8 +4,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class TalonSRXMotorController {
+public class TalonSRXMotorController extends SubsystemBase {
 	public enum TalonEncoderType {
 		MAG_RELATIVE,
 		MAG_ABSOLUTE,

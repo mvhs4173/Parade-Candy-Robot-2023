@@ -7,9 +7,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.wpilibj.Encoder;
 // import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
-public class SwerveModule {
+public class SwerveModule extends SubsystemBase {
     public static final int ENCODER_TICKS_PER_REVOLUTION = 1024;
     private final String name;
     private TalonSRXMotorController driveMotor, swivelMotor;
