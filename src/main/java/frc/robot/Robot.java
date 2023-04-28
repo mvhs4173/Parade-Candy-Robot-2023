@@ -4,12 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.SwerveDrive;
+//import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
 
 /**
@@ -22,11 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
-  private SwerveDrive swerveDrive = RobotContainer.swerveDrive;
-  public static final String maxMotorSpeedPercentKey = "MaxMotorSpeedPercent";
-  public static final String swivelSpeedExponentKey = "SwivelSpeedExponent";
-  private static double SWIVEL_SPEED_EXPONENT = .5;
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,13 +30,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    if (!Preferences.containsKey(maxMotorSpeedPercentKey)) {
-      Preferences.setDouble(maxMotorSpeedPercentKey, SwerveDrive.MAX_DRIVE_PERCENT_SPEED);
-    }
-    if (!Preferences.containsKey(swivelSpeedExponentKey)) {
-      Preferences.setDouble(swivelSpeedExponentKey, SWIVEL_SPEED_EXPONENT);
-    }
     m_robotContainer = new RobotContainer();
+
   }
 
   /**
@@ -58,11 +48,15 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("NavX Yaw", RobotContainer.navX.getYaw());
-    int i = 0;
-    for(SwerveModule module: swerveDrive.getSwerveModules()) {
-      i++;
-      SmartDashboard.putNumber("Module " + i + " angle", module.getEncoderAngleOfSwivelMotor());
+    // The following is only for debugging.  Perhaps should condition on
+    // TuningVariables.ebugLevel.get().
+    if (TuningVariables.debugLevel.get() > 3) {
+      SmartDashboard.putNumber("NavX Yaw", RobotContainer.navX.getYaw());
+      int i = 0;
+      for(SwerveModule module: m_robotContainer.getSwerveDrive().getSwerveModules()) {
+        i++;
+        SmartDashboard.putNumber("Module " + module.getName() + " angle", module.getEncoderAngleOfSwivelMotor());
+      }
     }
   }
 
@@ -117,7 +111,7 @@ public class Robot extends TimedRobot {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
 
-    swerveDrive.resetModules();
+    m_robotContainer.getSwerveDrive().resetModules();
   }
 
   /** This function is called periodically during test mode. */

@@ -11,19 +11,46 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
 public class SwerveModule extends SubsystemBase {
+    public static class SwivelControl {
+        private double m_allowedError;
+        private double m_speed;
+        private double m_speedExponent;
+        private double m_angleForMaxSpeed;
+        public SwivelControl(double allowedError, double speed, double speedExponent, double angleForMaxSpeed){
+            m_allowedError = allowedError;
+            m_speed = speed;
+            m_speedExponent = speedExponent;
+            m_angleForMaxSpeed = angleForMaxSpeed;
+        }
+        public double getAllowedError(){
+            return m_allowedError;
+        }
+        public double getSpeed(){
+            return m_speed;
+        }
+        public double getSpeedExponent(){
+            return m_speedExponent;
+        }
+        public double getAngleForMaxSpeed(){
+            return m_angleForMaxSpeed;
+        }
+    }
     public static final int ENCODER_TICKS_PER_REVOLUTION = 1024;
     private final String name;
-    private TalonSRXMotorController driveMotor, swivelMotor;
+    private TalonSRXMotorController driveMotor;
+    private TalonSRXMotorController swivelMotor;
+    private SwivelControl m_swivelControl;
     private boolean reverse;
     private double zeroAngle;
     private double driveMultiplier;
     private Translation2d location;
 
     public SwerveModule(String name, TalonSRXMotorController driveMotor, TalonSRXMotorController swivelMotor,
-                        double zeroAngle, double driveMultiplier, Translation2d location) {
+                        SwivelControl swivelControl, double zeroAngle, double driveMultiplier, Translation2d location) {
         this.name = name;
         this.driveMotor = driveMotor;
         this.swivelMotor = swivelMotor;
+        this.m_swivelControl = swivelControl;
         this.zeroAngle = zeroAngle;
         this.driveMultiplier = driveMultiplier;
         this.location = location;
@@ -38,8 +65,8 @@ public class SwerveModule extends SubsystemBase {
         double currentAngle = getEncoderAngleOfSwivelMotor();
         double angleDiff = optimizeDegrees180(targetAngle - currentAngle);
 
-        if (Math.abs(angleDiff) >= SwerveDrive.ALLOWED_ERROR) {
-            double speed = SwerveDrive.SWIVEL_SPEED * Math.pow(Math.abs(angleDiff / SwerveDrive.ANGLE_FOR_MAX_SWIVEL_SPEED), SwerveDrive.SWIVEL_SPEED_EXPONENT) * Math.signum(angleDiff);
+        if (Math.abs(angleDiff) >= m_swivelControl.getAllowedError()) {
+            double speed = m_swivelControl.getSpeed() * Math.pow(Math.abs(angleDiff / m_swivelControl.getAngleForMaxSpeed()), 1.0 /*m_swivelControl.getSpeedExponent()*/) * Math.signum(angleDiff);
             swivelMotor.setPercentSpeed(speed);
         } else {
             swivelMotor.setPercentSpeed(0);
@@ -82,6 +109,9 @@ public class SwerveModule extends SubsystemBase {
     }
     public TalonSRXMotorController getDriveMotor() {
         return driveMotor;
+    }
+    public String getName(){
+        return name;
     }
 
     //////////////////////

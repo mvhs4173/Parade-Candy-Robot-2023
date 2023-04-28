@@ -17,16 +17,14 @@ import frc.robot.Vector2d;
 
 public class SwerveDrive extends SubsystemBase{
 
-    public static final double WHEEL_DIAMETER = 4 / 12.0; // (feet)
-    public static final double MAX_DRIVE_PERCENT_SPEED = .37, // (percent) Max speed for driving when using percent speed
-                               MAX_RPS = .225, // (rotations/sec) Max rotation speed when using percent speed to rotate drive train
-                               MAX_DRIVE_ROTATION_EXPONENT = .8, // The power to raise the chassis rotation speed to with lookVector driving at full drive speed
-                               MIN_DRIVE_ROTATION_EXPONENT = .5; // The power to reaise the chassis rotation speed to with lookVector driving while stationary
-                               public static final double INPUT_DEADZONE = .05; // (percent) Region at which any drive/rotation input is considered noise, and set to 0
-    public static final double SWIVEL_SPEED = 1, // (percent) Max speed for swiveling module to target angle
-                               ALLOWED_ERROR = 0.6, // (degrees)
-                               ANGLE_FOR_MAX_SWIVEL_SPEED = 90, // The angle (difference between current heading and desired setpoint) at which the module should swivel at max speed (SWIVEL_SPEED)
-                               SWIVEL_SPEED_EXPONENT = 1.0; // The power to raise the module swivel speed to, helping the module reach its setpoint smoothly
+    private final double WHEEL_DIAMETER = 4 / 12.0; // (feet)
+    private double m_maxDrivePercentSpeed = .37; // (percent) Max speed for driving when using percent speed
+    private double MAX_RPS = .225; // (rotations/sec) Max rotation speed when using percent speed to rotate drive train
+    private double MAX_DRIVE_ROTATION_EXPONENT = .8; // The power to raise the chassis rotation speed to with lookVector driving at full drive speed
+    private double MIN_DRIVE_ROTATION_EXPONENT = .5; // The power to reaise the chassis rotation speed to with lookVector driving while stationary
+    private double INPUT_DEADZONE = .05; // (percent) Region at which any drive/rotation input is considered noise, and set to 0
+    private double SWIVEL_SPEED = 1; // (percent) Max speed for swiveling module to target angle
+    private double ALLOWED_ERROR = 0.6; // (degrees)
 
     private SwerveDriveKinematics kinematics;
 
@@ -45,6 +43,10 @@ public class SwerveDrive extends SubsystemBase{
     /////////////////////
     // PUBLIC METHODS //
     ///////////////////
+
+    public double getMaxDrivePercentSpeed() {
+        return m_maxDrivePercentSpeed;
+    }
 
     public void driveFieldOrientedWithLookVector(Vector2d driveVector, Vector2d lookVector) {
         double targetAngle = optimizeDegrees180(180 - calculateAngleOfVector(lookVector) - 90);
@@ -107,14 +109,14 @@ public class SwerveDrive extends SubsystemBase{
 
             // Compensate for 90 degree discrepancy in the library's algorithm for angular setpoints from rotation
             if (Math.abs(omega) > 0) {
-                speeds = new ChassisSpeeds(-x * MAX_DRIVE_PERCENT_SPEED, y * MAX_DRIVE_PERCENT_SPEED, omega);
+                speeds = new ChassisSpeeds(-x * m_maxDrivePercentSpeed, y * m_maxDrivePercentSpeed, omega);
 
                 moduleStates = kinematics.toSwerveModuleStates(speeds);
 
                 for (int i = 0; i < modules.length; i++)
                     moduleStates[i].angle = Rotation2d.fromDegrees(moduleStates[i].angle.getDegrees() + 90);
             } else {
-                speeds = new ChassisSpeeds(-y * MAX_DRIVE_PERCENT_SPEED, -x * MAX_DRIVE_PERCENT_SPEED, omega);
+                speeds = new ChassisSpeeds(-y * m_maxDrivePercentSpeed, -x * m_maxDrivePercentSpeed, omega);
                 
                 moduleStates = kinematics.toSwerveModuleStates(speeds);
             }
@@ -189,9 +191,9 @@ public class SwerveDrive extends SubsystemBase{
 
     @SuppressWarnings("unused")
     private void driveMotorAtPercentSpeed(TalonSRXMotorController motor, double speed) {
-        if (speed > MAX_DRIVE_PERCENT_SPEED) {
+        if (speed > m_maxDrivePercentSpeed) {
             System.out.println("WARN: SwerveDrive was told to drive above its set max speed.");
-            speed = MAX_DRIVE_PERCENT_SPEED;
+            speed = m_maxDrivePercentSpeed;
         }
         motor.setPercentSpeed(speed);
     }

@@ -66,11 +66,15 @@ public class RobotContainer {
   public static AHRS navX = new AHRS(SPI.Port.kMXP); // Gets NavX device installed into SPI port (integrated onto RoboRio). Other options would be to use USB or I2C
 
   // SUBSYSTEMS
-  public static SwerveModule swerveModuleFR = new SwerveModule("Front Right", driveMotorFrontRight, swivelMotorFrontRight, Constants.FR_SWIVEL_ZERO_ANGLE, Constants.FR_DRIVE_MULTIPLIER, Constants.FR_LOCATION),
-                             swerveModuleFL = new SwerveModule("Front Left", driveMotorFrontLeft, swivelMotorFrontLeft, Constants.FL_SWIVEL_ZERO_ANGLE, Constants.FL_DRIVE_MULTIPLIER, Constants.FL_LOCATION),
-                             swerveModuleBL = new SwerveModule("Back Left", driveMotorBackLeft, swivelMotorBackLeft, Constants.BL_SWIVEL_ZERO_ANGLE, Constants.BL_DRIVE_MULTIPLIER, Constants.BL_LOCATION),
-                             swerveModuleBR = new SwerveModule("Back Right", driveMotorBackRight, swivelMotorBackRight, Constants.BR_SWIVEL_ZERO_ANGLE, Constants.BR_DRIVE_MULTIPLIER, Constants.BR_LOCATION);
-  public static SwerveDrive swerveDrive = new SwerveDrive(navX, swerveModuleFR, swerveModuleFL, swerveModuleBL, swerveModuleBR);
+  private SwerveModule.SwivelControl m_swivelControl = new SwerveModule.SwivelControl(0.6, 1.0, 1.0,  90.0 );
+  private SwerveModule swerveModuleFR = new SwerveModule("Front Right", driveMotorFrontRight, swivelMotorFrontRight, m_swivelControl,  Constants.FR_SWIVEL_ZERO_ANGLE, Constants.FR_DRIVE_MULTIPLIER, Constants.FR_LOCATION),
+                       swerveModuleFL = new SwerveModule("Front Left", driveMotorFrontLeft, swivelMotorFrontLeft, m_swivelControl, Constants.FL_SWIVEL_ZERO_ANGLE, Constants.FL_DRIVE_MULTIPLIER, Constants.FL_LOCATION),
+                       swerveModuleBL = new SwerveModule("Back Left", driveMotorBackLeft, swivelMotorBackLeft, m_swivelControl, Constants.BL_SWIVEL_ZERO_ANGLE, Constants.BL_DRIVE_MULTIPLIER, Constants.BL_LOCATION),
+                       swerveModuleBR = new SwerveModule("Back Right", driveMotorBackRight, swivelMotorBackRight, m_swivelControl, Constants.BR_SWIVEL_ZERO_ANGLE, Constants.BR_DRIVE_MULTIPLIER, Constants.BR_LOCATION);
+  private SwerveDrive m_swerveDrive = new SwerveDrive(navX, swerveModuleFR, swerveModuleFL, swerveModuleBL, swerveModuleBR);
+  public SwerveDrive getSwerveDrive(){
+    return m_swerveDrive;
+  }
 
   // public static CandyCannon cannon = new CandyCannon(cannonDoubleSolenoid);
 
@@ -86,7 +90,7 @@ public class RobotContainer {
     m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
     configureButtonBindings();
-    swerveDrive.setDefaultCommand(new DriveViaXboxController(swerveDrive, driverJoy));
+    m_swerveDrive.setDefaultCommand(new DriveViaXboxController(m_swerveDrive, driverJoy));
   }
 
   /**
