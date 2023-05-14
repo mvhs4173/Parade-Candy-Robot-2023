@@ -21,13 +21,17 @@ def get_apriltag_detector_and_estimator(frame_size):
     # FRC 2023 uses tag16h5 (game manual 5.9.2)
     assert detector.addFamily("tag16h5")
     estimator = robotpy_apriltag.AprilTagPoseEstimator(
-    # config numbers from https://calibdb.net for Microsoft LifeCam HD-3000 at 640x480 pixels
+    # The raspberry pi global shutter camera uses the Sony IMX296 sensor, whose pixels
+    # are 3.45 micrometers square.  They are in a 1440 wide by 1080 high array.
+    # I am currently using the pi wide angle lens, with a focal length of 6 millimeters.
+    # Assuming there is no space between the pixels, this makes fx and fy
+    # 6.00e-3/3.45e-6 = 1739.13 pixels
     robotpy_apriltag.AprilTagPoseEstimator.Config(
             0.1524, # width of tag in meters (6 inches / 39.37 ) (was 0.2)
-            737.12,    # fx (was 500)
-            741.93,    # fy (was 500)
-            324.95,    # cx (was frame_size[1] / 2.0),
-            245.72     # cy (was frame_size[0] / 2.0)
+            1739.13,    # fx: "camera horizontal focal length, in pixels"
+            1739.13,    # fy: "camera vertical focal length, in pixels"
+            frame_size[0] / 2.0,    # cx: "camera horizontal focal center, in pixels"
+            frame_size[1] / 2.0     # cy: "camera vertical focal center, in pixels"
         )
     )
     return detector, estimator
@@ -58,7 +62,7 @@ def detect_and_process_apriltag(frame, detector, estimator):
 
 def setup_network_table_publishers(teamNumber, clientName, apriltag_ids_to_publish):
     global table # needs to exist for entire length of program
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
     instance = ntcore.NetworkTableInstance.getDefault()
     instance.setServerTeam(teamNumber)
     instance.startClient4(clientName)
@@ -113,7 +117,7 @@ def publish(publishers, results): # assume 'results' are output of detect_and_pr
 def main():
     outputImage = True
     apriltag_ids_to_publish = [1, 2, 3, 4, 5, 6, 7, 8]
-    CameraServer.enableLogging()
+    CameraServer.enableLogging() # ???
 
     # Pi Global Shutter camera has 1456*1088 pixels, but
     # the Pi's Broadcom chip can quickly reduce its size.
@@ -121,7 +125,7 @@ def main():
     # stream).  There is also a low resolution stream ('lores').
     # frame_size = (1456, 1088) # camera's native frame size, in pixels
     # Too big a frame_size slows down processing.
-    frame_size = c(640, 480)
+    frame_size = (640, 480)
     frame_rate = 60 # frames/second (this is not used, we just take stills)
     camera = Picamera2()
     camera_config = camera.create_still_configuration( {'size': frame_size} )
@@ -142,7 +146,7 @@ def main():
     prev_grab_time = time.monotonic()
     while True:
         img = camera.capture_array()
-        print("shape=" + str(img.shape))
+        # print("shape=" + str(img.shape))
         if img is None:
             # Send the output the error.
             if (outputImage):
