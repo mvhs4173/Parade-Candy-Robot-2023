@@ -143,6 +143,12 @@ public class SwerveDrive extends SubsystemBase{
         }
     }
 
+    public void stop() {
+        for (int i = 0 ; i < modules.length; i++) {
+            modules[i].stop();
+        }
+    }
+
     /**
      * Reset the displacement (position) and yaw (rotation)
      * of the NavX

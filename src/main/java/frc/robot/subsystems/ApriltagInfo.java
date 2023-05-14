@@ -83,6 +83,7 @@ public class ApriltagInfo extends SubsystemBase {
     m_apriltagIdsOfInterest = apriltagIdsOfInterest;
 
     for(int id : m_apriltagIdsOfInterest) {
+      System.out.println("==> Subscribing to Apriltag " + id);
       m_idPoseCenterSubscribers.put(id, m_instance.getDoubleArrayTopic("/Apriltag/id_pose_center_" + id).subscribe(new double[]{}));
       m_apriltagRecords.put(id, new ApriltagRecord());
     }
@@ -141,7 +142,7 @@ public class ApriltagInfo extends SubsystemBase {
       SmartDashboard.putNumber("Yaw 1", apriltagRecord1.getYaw() * rToD);
       SmartDashboard.putNumber("Pitch 1", apriltagRecord1.getPitch() * rToD);
       SmartDashboard.putNumber("Roll 1", apriltagRecord1.getRoll() * rToD);
-      SmartDashboard.putNumber("1 was seen", apriltagRecord1.wasSeen() ? 1.0 : 0.0);
+      SmartDashboard.putBoolean("1 was seen", apriltagRecord1.wasSeen());
       SmartDashboard.putNumber("1's frame x", apriltagRecord1.getFrameX());
     }
     //SmartDashboard.put("array0", getArray()[0]);

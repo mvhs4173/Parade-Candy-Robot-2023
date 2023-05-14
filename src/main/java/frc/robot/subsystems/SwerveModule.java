@@ -80,6 +80,10 @@ public class SwerveModule extends SubsystemBase {
         driveMotor.setPercentSpeed(speed * driveMultiplier);
     }
 
+    public void stop() {
+        driveAtPercentSpeed(0.0);
+    }
+
     public void resetModule() {
         System.out.print(name + ": reset zeroAngle from " + zeroAngle + " to ");
         zeroAngle -= getEncoderAngleOfSwivelMotor();

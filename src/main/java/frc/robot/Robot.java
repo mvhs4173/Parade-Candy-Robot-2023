@@ -52,9 +52,7 @@ public class Robot extends TimedRobot {
     // TuningVariables.ebugLevel.get().
     if (TuningVariables.debugLevel.get() > 3) {
       SmartDashboard.putNumber("NavX Yaw", RobotContainer.navX.getYaw());
-      int i = 0;
       for(SwerveModule module: m_robotContainer.getSwerveDrive().getSwerveModules()) {
-        i++;
         SmartDashboard.putNumber("Module " + module.getName() + " angle", module.getEncoderAngleOfSwivelMotor());
       }
     }
