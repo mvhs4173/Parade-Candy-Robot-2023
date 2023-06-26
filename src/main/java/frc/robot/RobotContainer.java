@@ -20,9 +20,12 @@ import frc.robot.commands.DriveViaXboxController;
 import frc.robot.commands.LEDFlash;
 // import frc.robot.commands.LaunchCandy;
 import frc.robot.commands.RunLEDPatrioticPattern;
+import frc.robot.commands.SpinMotorHold;
 import frc.robot.subsystems.ApriltagInfo;
+import frc.robot.commands.GoToAprilTag;
 // import frc.robot.subsystems.CandyCannon;
 import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.NeoMotor;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.TalonSRXMotorController;
@@ -83,6 +86,7 @@ public class RobotContainer {
   //public static FlashLEDLaunchPattern cmdFlashLEDLaunchPattern = new FlashLEDLaunchPattern(ledStrip);
   public static LEDFlash ledFlash = new LEDFlash(ledStrip, new Color(255,0,0), new Color(0,255,0), 1.0);
   // public static LaunchCandy cmdLaunchCandy = new LaunchCandy(cannon, ledFlash, cmdRunLEDPatrioticPattern);
+  public static NeoMotor m_neoMotor = new NeoMotor(RobotMap.flagID);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -101,7 +105,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     System.out.println("configureButtonBinds [no buttons configured]");
-    // launchButton.onTrue(cmdLaunchCandy);
+    //launchButton.whileTrue(new GoToAprilTag(m_swerveDrive));
+
+    launchButton.whileTrue(new SpinMotorHold(m_neoMotor, RobotMap.flagVoltage));
   }
 
   /**

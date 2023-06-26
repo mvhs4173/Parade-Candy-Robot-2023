@@ -149,6 +149,10 @@ public class SwerveDrive extends SubsystemBase{
         }
     }
 
+    public void spinWithPercentSpeed(double omega) {
+        driveWithPercentSpeeds(0, 0, omega);
+    }
+
     /**
      * Reset the displacement (position) and yaw (rotation)
      * of the NavX

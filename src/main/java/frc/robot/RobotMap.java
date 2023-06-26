@@ -5,7 +5,7 @@ public class RobotMap {
     public static int driverJoy = 0;
 
     // Button IDs
-    public static int launchButton = 6;
+    public static int launchButton = 1;
 
     // Motor Controller CAN IDs
     public static int driveMotorFrontRight = 2,
@@ -24,4 +24,8 @@ public class RobotMap {
     public static int pcm = 1;
     public static int cannonForwardChannel = 0,
                       cannonReverseChannel = 1;
+    
+    // flag
+    public static int flagID = 54;
+    public static double flagVoltage = 6;
 }
