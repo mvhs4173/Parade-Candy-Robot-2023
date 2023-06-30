@@ -107,7 +107,7 @@ public class RobotContainer {
     System.out.println("configureButtonBinds [no buttons configured]");
     //launchButton.whileTrue(new GoToAprilTag(m_swerveDrive));
 
-    launchButton.whileTrue(new SpinMotorHold(m_neoMotor, RobotMap.flagVoltage));
+    launchButton.toggleOnTrue(new SpinMotorHold(m_neoMotor, RobotMap.flagVoltage));
   }
 
   /**
