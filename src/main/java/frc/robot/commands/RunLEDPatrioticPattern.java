@@ -12,13 +12,13 @@ public class RunLEDPatrioticPattern extends CommandBase {
   LEDStrip ledStrip;
   Timer timer = new Timer();
 
-  final double DELAY = 0.25; // (seconds) How long to wait between each increment of the pattern
+  final double DELAY = 0.1; // (seconds) How long to wait between each increment of the pattern
 
   /** Creates a new RunPatrioticPattern. */
   public RunLEDPatrioticPattern(LEDStrip ledStrip) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.ledStrip = ledStrip;
-    // addRequirements(ledStrip);
+    addRequirements(ledStrip);
   }
 
   // Called when the command is initially scheduled.

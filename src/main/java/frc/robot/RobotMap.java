@@ -2,7 +2,7 @@ package frc.robot;
 
 public class RobotMap {
     // Input USB IDs
-    public static int driverJoy = 0;
+    public static int xboxControllerPort = 0;
 
     // Button IDs
     public static int launchButton = 1;

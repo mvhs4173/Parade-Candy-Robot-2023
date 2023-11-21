@@ -68,11 +68,11 @@ public class LEDStrip extends SubsystemBase {
             if (indexInPattern >= 0 && indexInPattern <= 3) {
                 ledBuffer.setRGB(i, 255, 0, 0); // Red
             } else if (indexInPattern == 4){
-                ledBuffer.setRGB(i, 0, 0, 0); // nothing
+                ledBuffer.setRGB(i, 120, 120, 0); // nothing
             } else if (indexInPattern >= 5 && indexInPattern <= 8 ){
                 ledBuffer.setRGB(i, 0, 255, 0); // Green
             } else if (indexInPattern == 9){
-                ledBuffer.setRGB(i, 0, 0, 0); // nothing
+                ledBuffer.setRGB(i, 120, 120, 0); // nothing
             }
         }
 

@@ -42,10 +42,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private ApriltagInfo m_apriltagInfo;
   // JOYSTICKS/CONTROLLERS
-  public static XboxController driverJoy = new XboxController(RobotMap.driverJoy);
+  public static XboxController m_xboxController = new XboxController(RobotMap.xboxControllerPort);
 
   // BUTTONS
-  public static JoystickButton launchButton = new JoystickButton(driverJoy, RobotMap.launchButton);
+  public static JoystickButton launchButton = new JoystickButton(m_xboxController, RobotMap.launchButton);
 
   // MISCELLANEOUS
   // public static PneumaticHub pHub = new PneumaticHub(RobotMap.pcm);
@@ -94,7 +94,7 @@ public class RobotContainer {
     m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
     configureButtonBindings();
-    m_swerveDrive.setDefaultCommand(new DriveViaXboxController(m_swerveDrive, driverJoy));
+    m_swerveDrive.setDefaultCommand(new DriveViaXboxController(m_swerveDrive, m_xboxController));
   }
 
   /**
@@ -107,8 +107,10 @@ public class RobotContainer {
     System.out.println("configureButtonBinds [no buttons configured]");
     //launchButton.whileTrue(new GoToAprilTag(m_swerveDrive));
 
-    launchButton.toggleOnTrue(new SpinMotorHold(m_neoMotor, RobotMap.flagVoltage));
-  }
+    //launchButton.toggleOnTrue(new SpinMotorHold(m_neoMotor, RobotMap.flagVoltage));
+  JoystickButton b = new JoystickButton(m_xboxController, XboxController.Button.kB.value);
+  b.toggleOnTrue(cmdRunLEDPatrioticPattern);
+}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
