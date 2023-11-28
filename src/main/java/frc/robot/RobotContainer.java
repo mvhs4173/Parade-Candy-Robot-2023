@@ -93,6 +93,7 @@ public class RobotContainer {
     System.out.println("@@@ naxX.getYaw=" + navX.getYaw() + " @@@");
     m_apriltagInfo = new ApriltagInfo(Constants.TEAM_NUMBER, "robot", new int[]{1, 2, 3, 4, 5, 6, 7, 8});
     // Configure the button bindings
+    getSwerveDrive().resetModules();
     configureButtonBindings();
     m_swerveDrive.setDefaultCommand(new DriveViaXboxController(m_swerveDrive, m_xboxController));
   }
