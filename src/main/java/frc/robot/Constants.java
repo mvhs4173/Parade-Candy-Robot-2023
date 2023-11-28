@@ -28,9 +28,9 @@ public final class Constants {
                                FL_SWIVEL_ZERO_ANGLE = 0 - 113 + 180,
                                BL_SWIVEL_ZERO_ANGLE = 180 - 30 + 180,
                                BR_SWIVEL_ZERO_ANGLE = 180 + 120.5 + 180 + 90 + 45;
-    public static final double FR_DRIVE_MULTIPLIER = -1, // Used to compensate for nuances in drive motor directions or percent speeds. One side (left or right) naturally goes backwards, due to the way the gearbox works
-                               FL_DRIVE_MULTIPLIER = 1,
-                               BL_DRIVE_MULTIPLIER = 1,
-                               BR_DRIVE_MULTIPLIER = -1;
+    public static final double FR_DRIVE_MULTIPLIER = -2, // Used to compensate for nuances in drive motor directions or percent speeds. One side (left or right) naturally goes backwards, due to the way the gearbox works
+                               FL_DRIVE_MULTIPLIER = 2,
+                               BL_DRIVE_MULTIPLIER = 2,
+                               BR_DRIVE_MULTIPLIER = -2;
     public static final int TEAM_NUMBER = 4173;
 }
