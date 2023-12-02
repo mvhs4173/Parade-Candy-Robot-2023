@@ -63,16 +63,27 @@ public class LEDStrip extends SubsystemBase {
     
     public void setToChristmasColorPattern() {
         for (int i = 0; i < ledBuffer.getLength(); i++) {
-            int indexInPattern = (i + 1) % 10;
+            int indexInPattern = (i + 1) % 20;
             
             if (indexInPattern >= 0 && indexInPattern <= 3) {
-                ledBuffer.setRGB(i, 255, 0, 0); // Red
+               // ledBuffer.setRGB(i, 255, 0, 0); // led
+               ledBuffer.setLED(i, Color.kRed);
+
             } else if (indexInPattern == 4){
-                ledBuffer.setRGB(i, 120, 120, 0); // nothing
+               // ledBuffer.setRGB(i, 120, 120, 0); // nothing
+               ledBuffer.setLED(i, Color.kViolet);;
             } else if (indexInPattern >= 5 && indexInPattern <= 8 ){
-                ledBuffer.setRGB(i, 0, 255, 0); // Green
+               // ledBuffer.setRGB(i, 0, 255, 0); // Green
+               ledBuffer.setLED(i, Color.kGreen);
             } else if (indexInPattern == 9){
-                ledBuffer.setRGB(i, 120, 120, 0); // nothing
+               // ledBuffer.setRGB(i, 120, 120, 0); // nothing
+               ledBuffer.setLED(i, Color.kViolet);
+            } else if (indexInPattern >= 10 && indexInPattern <=13){
+               ledBuffer.setLED(i, Color.kBlue);
+            } else if (indexInPattern ==14){
+                ledBuffer.setLED(i, Color.kViolet);
+            } else if (indexInPattern >= 15 && indexInPattern <=19){
+                ledBuffer.setLED(i, Color.kFuchsia);
             }
         }
 
